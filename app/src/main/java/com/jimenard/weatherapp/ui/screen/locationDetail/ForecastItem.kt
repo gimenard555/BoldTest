@@ -1,6 +1,8 @@
 package com.jimenard.weatherapp.ui.screen.locationDetail
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -9,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -29,7 +32,6 @@ fun ForecastItem(forecast: DayUi) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(800.dp)
         ) {
             Text(
                 modifier = Modifier
@@ -38,11 +40,22 @@ fun ForecastItem(forecast: DayUi) {
                 text = forecast.condition.text.uppercase(),
                 textAlign = TextAlign.Center
             )
-            AsyncImage(
-                modifier = Modifier.height(300.dp),
-                model = forecast.condition.icon,
-                contentDescription = "This is an icon who show the condition ${forecast.condition.text}"
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = "The average temperature for the day is ${forecast.tempAverage} °C"
+                )
+                AsyncImage(
+                    modifier = Modifier.padding(16.dp),
+                    model = forecast.condition.icon,
+                    contentDescription = "This is an icon who show the condition ${forecast.condition.text}"
+                )
+            }
+
         }
     }
 }

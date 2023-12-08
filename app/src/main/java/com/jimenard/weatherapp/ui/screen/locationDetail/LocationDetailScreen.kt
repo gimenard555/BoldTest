@@ -13,11 +13,15 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -69,6 +73,18 @@ fun LocationDetailScreen(
                         title = {
                             Text("Location Detail")
                         },
+                        navigationIcon = if (navController.previousBackStackEntry != null) {
+                            {
+                                IconButton(onClick = { navController.navigateUp() }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.ArrowBack,
+                                        contentDescription = "Back"
+                                    )
+                                }
+                            }
+                        } else {
+                            null
+                        }
                     )
                 },
             ) {
@@ -88,7 +104,8 @@ fun LocationDetailScreen(
                                 .verticalScroll(rememberScrollState()),
                         ) {
                             Text(
-                                text = viewModel.placeDetail.value?.location?.name.orEmpty(),
+                                text = viewModel.placeDetail.value?.location?.name.orEmpty()
+                                    .uppercase(),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 16.dp),
@@ -104,7 +121,6 @@ fun LocationDetailScreen(
                                     ForecastItem(forecast)
                                 }
                             }
-
                         }
                     }
                 }
